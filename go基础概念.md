@@ -10,14 +10,16 @@
 		- [1.3.1. go env](#131-go-env)
 		- [1.3.2. go get](#132-go-get)
 		- [1.3.3. go fmt](#133-go-fmt)
-		- [go list](#go-list)
-		- [1.3.4. go build](#134-go-build)
-		- [1.3.5. go install](#135-go-install)
-		- [1.3.6. go run](#136-go-run)
-		- [1.3.7. go clean](#137-go-clean)
+		- [1.3.4. go list](#134-go-list)
+		- [1.3.5. go build](#135-go-build)
+		- [1.3.6. go install](#136-go-install)
+		- [1.3.7. go run](#137-go-run)
+		- [1.3.8. go clean](#138-go-clean)
 	- [1.4. go module](#14-go-module)
 		- [1.4.1. go mod 简单使用](#141-go-mod-简单使用)
 		- [1.4.2. go.mod 文件](#142-gomod-文件)
+	- [1.5. package](#15-package)
+	- [开启module区别](#开启module区别)
 
 <!-- /TOC -->
 
@@ -188,12 +190,12 @@ go env -w NAME=VALUE
 - 远程下载包, 从master分支拉取
 - 执行 go install  
 
-这里涉及包管理相关内容. 现在不推荐使用 get 命令了, 只能拉取主分支, go mod开启会影响 go get使用. 推荐使用go mod 进行包管理.   
+这里涉及包管理相关内容. 现在不推荐使用 get 命令了, 只能拉取主分支, 没有版本管理. go mod开启会影响 go get使用. 推荐使用go mod 进行包管理.   
 
 ### 1.3.3. go fmt
 格式化代码  
 
-### go list
+### 1.3.4. go list
 默认用于输出 package/module 信息. 
 -json 参数: 以json格式打印详细的信息.  
 -m 参数, 列举modules信息, 而不是package信息. package管理源码文件的, module 是封装的 packages, packages 的管理.  
@@ -206,7 +208,7 @@ go list -m -u -json all
 go list -m -versions  github.com/gin-gonic/gin
 ```
 
-### 1.3.4. go build
+### 1.3.5. go build
 go 文件第一句都是 package xxx 开头.  
 
 编译时读取xxx名字, 并不会安装.  
@@ -216,14 +218,20 @@ go 文件第一句都是 package xxx 开头.
 - 编译 main 包时, 生成相关可执行文件.  
 
 
-### 1.3.5. go install 
+### 1.3.6. go install 
+当module功能没有开启时:  
 将编译的文件和包安装在指定目录. 默认安装到 `$GOBIN` 目录下.  
 如果GOBIN 为空时, 将会安装到 `$GOPATH/bin` 或者 `$GOROOT/bin` 目录下. 优先是 `$GOPATH/bin`    
 
-### 1.3.6. go run
+当module功能开启时:  
+对于库文件, 编译, 缓存, 但是没有安装, 测试没有找到对应的库文件放哪了.  
+
+
+
+### 1.3.7. go run
 编译并运行项目
 
-### 1.3.7. go clean
+### 1.3.8. go clean
 清理对象文件和缓存
 
 ## 1.4. go module
@@ -312,3 +320,10 @@ require exclude replace 也是上述go mod edit 备选项.
 ```
  go help go.mod
 ```
+
+## 1.5. package  
+在源码第一句package中使用:  
+- 如果是可执行文件, 同一文件夹下, 使用package main
+- 如果是库文件, 同一文件夹下, 使用 package xxx, 与文件夹名一致.  
+
+## 开启module区别  
