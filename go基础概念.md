@@ -1,25 +1,25 @@
 <!-- TOC -->
 
 - [1. go 基础概念](#1-go-基础概念)
-	- [1.1. go 环境变量](#11-go-环境变量)
-		- [1.1.1. 环境变量 GOROOT](#111-环境变量-goroot)
-		- [1.1.2. 环境变量 GOPATH](#112-环境变量-gopath)
-		- [1.1.3. go 环境变量详解](#113-go-环境变量详解)
-	- [1.2. go 包管理](#12-go-包管理)
-	- [1.3. go 命令](#13-go-命令)
-		- [1.3.1. go env](#131-go-env)
-		- [1.3.2. go get](#132-go-get)
-		- [1.3.3. go fmt](#133-go-fmt)
-		- [1.3.4. go list](#134-go-list)
-		- [1.3.5. go build](#135-go-build)
-		- [1.3.6. go install](#136-go-install)
-		- [1.3.7. go run](#137-go-run)
-		- [1.3.8. go clean](#138-go-clean)
-	- [1.4. go module](#14-go-module)
-		- [1.4.1. go mod 简单使用](#141-go-mod-简单使用)
-		- [1.4.2. go.mod 文件](#142-gomod-文件)
-	- [1.5. package](#15-package)
-	- [开启module区别](#开启module区别)
+    - [1.1. go 环境变量](#11-go-环境变量)
+        - [1.1.1. 环境变量 GOROOT](#111-环境变量-goroot)
+        - [1.1.2. 环境变量 GOPATH](#112-环境变量-gopath)
+        - [1.1.3. go 环境变量详解](#113-go-环境变量详解)
+    - [1.2. go 包管理](#12-go-包管理)
+    - [1.3. go 命令](#13-go-命令)
+        - [1.3.1. go env](#131-go-env)
+        - [1.3.2. go get](#132-go-get)
+        - [1.3.3. go fmt](#133-go-fmt)
+        - [1.3.4. go list](#134-go-list)
+        - [1.3.5. go build](#135-go-build)
+        - [1.3.6. go install](#136-go-install)
+        - [1.3.7. go run](#137-go-run)
+        - [1.3.8. go clean](#138-go-clean)
+    - [1.4. go module](#14-go-module)
+        - [1.4.1. go mod 简单使用](#141-go-mod-简单使用)
+        - [1.4.2. go.mod 文件](#142-gomod-文件)
+    - [1.5. package](#15-package)
+    - [开启module区别](#开启module区别)
 
 <!-- /TOC -->
 
@@ -28,6 +28,7 @@
 # 1. go 基础概念
 
 ## 1.1. go 环境变量
+
 查看 go 环境变量命令.  
 
 ```
@@ -38,6 +39,7 @@ go 环境变量与shell的环境变量不完全一样. 配置 go 环境变量尽
 
 shell 环境变量中必须设置的参数:  
 下面两种方式, 找到 go 相关命令.  
+
 ```
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
@@ -46,6 +48,7 @@ export PATH=$PATH:$GOROOT/bin
 
 可选设置的环境参数:  
 目的, shell找到 go 项目中的可执行文件/命令.  
+
 ```
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
@@ -62,15 +65,17 @@ go env -w xx=xx
 
 
 ### 1.1.1. 环境变量 GOROOT
+
 go 解压的路径.  
 将$GOROOT/bin 添加到PATH环境变量中.  
 go 解压出来后, 也是一个工作目录, 里面有src lib等目录.   
 
 ### 1.1.2. 环境变量 GOPATH
+
 简单理解为go开发的工作目录.  
 GOPATH 是一系列路径的集合, 每个路径都是一个 project.   
 
-下面这个图是有点误导性的, 不是GOPATH一个路径创建多个目录就是多个工作区. 实际上, 由多个不同的路径构成了GOPATH.  
+下面这个图是有点误导性的, 不是在GOPATH路径下创建多个子目录就是多个工作区. 实际上, 可能由多个不同的路径构成了GOPATH.  
 
 ![](https://img2018.cnblogs.com/blog/800902/201812/800902-20181226221959762-982631114.png)  
 

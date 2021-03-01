@@ -1,12 +1,12 @@
 <!-- TOC -->
 
 - [go 安装](#go-安装)
-	- [go 环境安装](#go-环境安装)
-		- [安装 go](#安装-go)
-		- [安装 delve](#安装-delve)
-		- [总结](#总结)
-	- [goland 远程开发调试配置](#goland-远程开发调试配置)
-	- [参考](#参考)
+    - [go 环境安装](#go-环境安装)
+        - [安装 go](#安装-go)
+        - [安装 delve](#安装-delve)
+        - [总结](#总结)
+    - [goland 远程开发调试配置](#goland-远程开发调试配置)
+    - [参考](#参考)
 
 <!-- /TOC -->
 
@@ -18,12 +18,11 @@ wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
 tar -C /usr/local -xzf  go1.14.4.linux-amd64.tar.gz
 export GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin
-export GOPATH=$HOME/go
-export PATH=$PATH:$GOPATH/bin
 ```
 
 修改/etc/profile, 添加
 ```
+GOROOT=/usr/local/go
 export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 ```
 
@@ -41,27 +40,26 @@ make install
 ```
 #! /bin/bash
 echo "get go tar"
-wget https://dl.google.com/go/go1.14.4.linux-amd64.tar.gz
-echo "start to install go"
+go_tar="go1.14.4.linux-amd64.tar.gz"
+go_tar_url="https://dl.google.com/go/"
+url=$go_tar_url$go_tar
+echo "$url"
+if [ ! -f "$go_tar" ]; then
+    wget $url
+fi
+    echo "start to install go"
 tar -C /usr/local -xzf  go1.14.4.linux-amd64.tar.gz
 grep GOROOT  /etc/profile
 if [ $? == 1 ]; then
   echo "export GOROOT=/usr/local/go" >> /etc/profile
 fi
+GOROOT=/usr/local/go
 grep "GOROOT/bin"  /etc/profile
 if [ $? == 1 ]; then
-  echo "export PATH=$PATH:$GOROOT/bin" >> /etc/profile
-fi
-grep GOPATH  /etc/profile
-if [ $? == 1 ]; then
-  echo "export GOPATH=$HOME/go" >> /etc/profile
-fi
-grep "GOPATH/bin"  /etc/profile
-if [ $? == 1 ]; then
-  echo "export PATH=$PATH:$GOPATH/bin" >> /etc/profile
+  echo "export PATH=\$PATH:\$GOROOT/bin" >> /etc/profile
 fi
 export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$GOPATH/bin
+echo $PATH
 echo "start to install delve"
 go env -w GO111MODULE=on
 go env -w GOPROXY=https://goproxy.io
@@ -83,3 +81,4 @@ make install
 ## 参考
 https://blog.csdn.net/u013536232/article/details/104123861
 https://blog.csdn.net/tianshi1017/article/details/104653560  
+
